@@ -43,7 +43,6 @@ app.*.map.json
 /android/app/release
 /android/*
 /ios/*
-/lib/*
 /linux/*
 /macos/*
 /windows/*
