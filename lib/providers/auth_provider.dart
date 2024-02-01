@@ -32,7 +32,9 @@ class AuthProvider extends ChangeNotifier {
       print("Login successful");
       // Navigate to Home page
     } catch (e) {
-      print("Sign in failed");
+      status = AuthStatus.Error;
+      //Display an Error
     }
+    notifyListeners();
   }
 }

@@ -2,6 +2,8 @@
 // ignore_for_file:unused_element, unused_field, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 // ignore_for_file: no_leading_underscores_for_local_identifiers, body_might_complete_normally_nullable
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +16,9 @@ class _LoginPageState extends State<LoginPage> {
   double _deviceHeight = 0;
   double _deviceWidth = 0;
   late GlobalKey<FormState> _formKey;
+
+  late String _email = '';
+  late String _password = '';
 
   _LoginPageState() {
     _formKey = GlobalKey<FormState>();
@@ -33,6 +38,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginPageUI() {
+    print(_email);
+    print(_password);
     return Container(
       height: _deviceHeight * 0.60,
       alignment: Alignment.center,
@@ -77,7 +84,9 @@ class _LoginPageState extends State<LoginPage> {
       height: _deviceHeight * 0.16,
       child: Form(
         key: _formKey,
-        onChanged: () {},
+        onChanged: () {
+          _formKey.currentState?.save();
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +104,16 @@ class _LoginPageState extends State<LoginPage> {
     return TextFormField(
       autocorrect: false,
       style: TextStyle(color: Colors.white),
-      validator: (_input) {},
-      onSaved: (_input) {},
+      validator: (_input) {
+        return _input!.isNotEmpty && _input.contains("@")
+            ? null
+            : "Please enter a valid email";
+      },
+      onSaved: (_input) {
+        setState(() {
+          _email = _input!;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "Email Address",
@@ -114,8 +131,14 @@ class _LoginPageState extends State<LoginPage> {
       autocorrect: false,
       obscureText: true,
       style: TextStyle(color: Colors.white),
-      validator: (_input) {},
-      onSaved: (_input) {},
+      validator: (_input) {
+        return _input!.isNotEmpty ? null : "Please Enter a Password";
+      },
+      onSaved: (_input) {
+        setState(() {
+          _password = _input!;
+        });
+      },
       cursorColor: Colors.white,
       decoration: InputDecoration(
         hintText: "Password",
@@ -133,7 +156,12 @@ class _LoginPageState extends State<LoginPage> {
       height: _deviceHeight * 0.06,
       width: _deviceWidth,
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            print("Validated Successfully");
+            //Login user
+          }
+        },
         color: Colors.blue,
         child: Text(
           "LOGIN",
