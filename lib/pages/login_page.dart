@@ -17,6 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   double _deviceWidth = 0;
   late GlobalKey<FormState> _formKey;
 
+  late AuthProvider _auth;
+
   late String _email = '';
   late String _password = '';
 
@@ -32,29 +34,36 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Align(
         alignment: Alignment.center,
-        child: _loginPageUI(),
+        child: ChangeNotifierProvider<AuthProvider>.value(
+          value: AuthProvider.instance,
+          child: _loginPageUI(),
+        ),
       ),
     );
   }
 
   Widget _loginPageUI() {
-    print(_email);
-    print(_password);
-    return Container(
-      height: _deviceHeight * 0.60,
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _headingWidget(),
-          _inputForm(),
-          _loginButton(),
-          _registerButton(),
-        ],
-      ),
+    return Builder(
+      builder: (BuildContext _context) {
+        _auth = Provider.of<AuthProvider>(_context);
+        print(_auth.user);
+        return Container(
+          height: _deviceHeight * 0.60,
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _headingWidget(),
+              _inputForm(),
+              _loginButton(),
+              _registerButton(),
+            ],
+          ),
+        );
+      },
     );
   }
 
