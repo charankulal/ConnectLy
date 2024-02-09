@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names, no_leading_underscores_for_local_identifiers, avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -34,6 +33,7 @@ class AuthProvider extends ChangeNotifier {
     } catch (e) {
       status = AuthStatus.Error;
       //Display an Error
+      print("Login error");
     }
     notifyListeners();
   }

@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   double _deviceWidth = 0;
   late GlobalKey<FormState> _formKey;
 
-  late AuthProvider _auth;
+  AuthProvider _auth=new AuthProvider();
 
   late String _email = '';
   late String _password = '';
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     return Builder(
       builder: (BuildContext _context) {
         _auth = Provider.of<AuthProvider>(_context);
-        print(_auth.user);
+        // print(_auth.user);
         return Container(
           height: _deviceHeight * 0.60,
           alignment: Alignment.center,
@@ -161,26 +161,30 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() {
-    return Container(
-      height: _deviceHeight * 0.06,
-      width: _deviceWidth,
-      child: MaterialButton(
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            print("Validated Successfully");
-            //Login user
-          }
-        },
-        color: Colors.blue,
-        child: Text(
-          "LOGIN",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-    );
+    return _auth.status == AuthStatus.Authenticating
+        ? Align(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          )
+        : Container(
+            height: _deviceHeight * 0.06,
+            width: _deviceWidth,
+            child: MaterialButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _auth.loginUserWithEmailAndPassword(_email, _password);
+                }
+              },
+              color: Colors.blue,
+              child: Text(
+                "LOGIN",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          );
   }
 
   Widget _registerButton() {
