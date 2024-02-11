@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   double _deviceWidth = 0;
   late GlobalKey<FormState> _formKey;
 
-  AuthProvider _auth=new AuthProvider();
+  AuthProvider _auth = AuthProvider.instance;
 
   late String _email = '';
   late String _password = '';
@@ -30,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
+    _auth.status = AuthStatus.NotAuthenticated;
 
     return Scaffold(
       body: Align(
