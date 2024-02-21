@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, no_leading_underscores_for_local_identifiers, avoid_print
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../services/snackbar_service.dart';
 
 enum AuthStatus {
   NotAuthenticated,
@@ -28,12 +29,14 @@ class AuthProvider extends ChangeNotifier {
           email: _email, password: _password);
       user = _result.user!;
       status = AuthStatus.Authenticated;
-      print("Login successful");
+      SnackBarService.instance
+          .showSnackBarSuccess("Welcome, ${user.email}");
       // Navigate to Home page
     } catch (e) {
       status = AuthStatus.Error;
       //Display an Error
-      print("Login error");
+      SnackBarService.instance
+          .showSnackBarError("Error!! Authentication failed");
     }
     notifyListeners();
   }

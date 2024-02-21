@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../services/snackbar_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -32,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
     _deviceWidth = MediaQuery.of(context).size.width;
     _auth.status = AuthStatus.NotAuthenticated;
 
+    
+
     return Scaffold(
       body: Align(
         alignment: Alignment.center,
@@ -47,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     return Builder(
       builder: (BuildContext _context) {
         _auth = Provider.of<AuthProvider>(_context);
+        SnackBarService.instance.buildContext = _context;
         // print(_auth.user);
         return Container(
           height: _deviceHeight * 0.60,
