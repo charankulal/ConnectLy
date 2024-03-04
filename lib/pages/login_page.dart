@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../services/snackbar_service.dart';
+import '../services/navigation_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -32,8 +33,6 @@ class _LoginPageState extends State<LoginPage> {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     _auth.status = AuthStatus.NotAuthenticated;
-
-    
 
     return Scaffold(
       body: Align(
@@ -195,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _registerButton() {
     return GestureDetector(
       onTap: () {
-        print("Heyy");
+        NavigationService.instance.navigateTo("register");
       },
       child: Container(
         height: _deviceHeight * 0.06,

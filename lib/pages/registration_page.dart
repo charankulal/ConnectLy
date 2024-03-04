@@ -1,6 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, use_key_in_widget_constructors, unused_field, prefer_const_constructors, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
+import '../services/navigation_service.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -201,15 +202,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   Widget _backToLoginPageButton() {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {
+        NavigationService.instance.goBack();
+      },
       child: Container(
-      height: _deviceHeight * 0.06,
-      width: _deviceWidth,
-      child: Icon(
-        Icons.arrow_back,
-        size: 40,
+        height: _deviceHeight * 0.06,
+        width: _deviceWidth,
+        child: Icon(
+          Icons.arrow_back,
+          size: 40,
+        ),
       ),
-    ),
     );
   }
 }

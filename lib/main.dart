@@ -6,6 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import './pages/login_page.dart';
 import './firebase_options.dart';
 import './pages/registration_page.dart';
+import 'services/navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Connectly',
+      navigatorKey: NavigationService.instance.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -33,7 +35,12 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: RegistrationPage(),
+      initialRoute: "login",
+      routes:{
+        "login":(BuildContext _context) => LoginPage(),
+        "register":(BuildContext _context)=> RegistrationPage(),
+      },
+      
     );
   }
 }
